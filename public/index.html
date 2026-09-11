@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>房屋裂缝智能识别</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="logo">🏠</div>
+      <div class="header-text">
+        <h1>房屋裂缝智能识别</h1>
+        <p>上传或拍摄墙体照片，AI 自动判断裂缝与风险等级</p>
+        <span class="status-pill is-idle" id="statusText">等待上传</span>
+      </div>
+    </header>
+
+    <main class="main">
+      <!-- 图片区域 -->
+      <section class="card upload-card">
+        <div class="upload-zone" id="uploadZone">
+          <div class="placeholder" id="placeholder">
+            <div class="placeholder-icon">📷</div>
+            <p class="placeholder-title">点击选择图片，或将图片拖拽到此处</p>
+            <p class="placeholder-tip">支持 JPG / PNG / WEBP，建议拍摄清晰的墙体整体与裂缝特写</p>
+          </div>
+          <img id="preview" class="preview" alt="图片预览" hidden />
+          <div id="scanLine" class="scan-line" hidden></div>
+        </div>
+
+        <div class="btn-row">
+          <label class="btn btn-ghost" for="cameraInput">
+            <span>📸</span> 拍照
+          </label>
+          <input id="cameraInput" type="file" accept="image/*" capture="environment" hidden />
+
+          <label class="btn btn-ghost" for="fileInput">
+            <span>🖼️</span> 选择图片
+          </label>
+          <input id="fileInput" type="file" accept="image/*" hidden />
+
+          <button class="btn btn-clear" id="clearBtn" type="button" hidden>清除</button>
+        </div>
+
+        <button class="btn btn-primary" id="recognizeBtn" type="button">
+          开始识别
+        </button>
+
+        <p class="error-tip" id="errorTip" hidden></p>
+      </section>
+
+      <!-- 结果区域 -->
+      <section class="card result-card" id="resultCard" hidden>
+        <div class="result-head">
+          <span class="result-badge" id="resultBadge">—</span>
+          <h2 class="result-title" id="resultTitle">识别结果</h2>
+        </div>
+
+        <div class="prob-block">
+          <div class="prob-ring" id="probRing">
+            <span class="prob-value" id="probValue">0%</span>
+          </div>
+          <div class="prob-desc">
+            <p class="prob-label">裂缝存在概率</p>
+            <p class="prob-hint" id="probHint">—</p>
+          </div>
+        </div>
+
+        <div class="meter">
+          <div class="meter-fill" id="meterFill"></div>
+        </div>
+
+        <ul class="result-detail">
+          <li>
+            <span class="key">是否检测到裂缝</span>
+            <span class="val" id="detailHasCrack">—</span>
+          </li>
+          <li>
+            <span class="key">风险等级</span>
+            <span class="val" id="detailRisk">—</span>
+          </li>
+          <li>
+            <span class="key">建议</span>
+            <span class="val" id="detailAdvice">—</span>
+          </li>
+        </ul>
+
+        <p class="disclaimer">提示：AI 识别结果仅供参考，不构成司法或工程鉴定结论。</p>
+      </section>
+
+      <!-- 加载遮罩 -->
+      <div class="loading" id="loading" hidden>
+        <div class="spinner"></div>
+        <p>AI 正在分析图片，请稍候…</p>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
